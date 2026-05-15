@@ -161,6 +161,7 @@ export default function Home() {
             setSelectedFileIndex(0);
           }}
         />
+
         <DesktopIcon
           icon="📁"
           label="My first IEEE paper"
@@ -233,7 +234,7 @@ export default function Home() {
 
       )}
 
-      {/* System Bar */}
+      {/* Dock */}
       <div
         className="
           absolute
@@ -242,12 +243,8 @@ export default function Home() {
           left-1/2
           -translate-x-1/2
 
-          w-[92vw]
-          max-w-[1200px]
-
-          h-16
-
           px-6
+          py-3
 
           bg-black/25
           backdrop-blur-2xl
@@ -255,303 +252,273 @@ export default function Home() {
           border
           border-white/10
 
-          rounded-2xl
+          rounded-[28px]
 
           shadow-[0_10px_40px_rgba(0,0,0,0.45)]
 
           flex
           items-center
-          justify-between
+          justify-center
+          gap-5
 
           z-40
         "
       >
 
-        {/* Left */}
-        <div
+        {/* GitHub */}
+        <a
+          href="https://github.com/builtbymauu"
+          target="_blank"
+
           className="
+            group
+
             flex
+            flex-col
             items-center
-            gap-10
+
+            transition-all
+            duration-300
+
+            hover:-translate-y-1
           "
         >
 
-          <div className="flex flex-col">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-500">
-              Status
-            </span>
+          <div
+            className="
+              w-14
+              h-14
 
-            <span className="text-sm text-zinc-200">
-              Online
-            </span>
+              rounded-2xl
+
+              bg-white/5
+              backdrop-blur-xl
+
+              border
+              border-white/10
+
+              flex
+              items-center
+              justify-center
+
+              shadow-[0_8px_30px_rgba(0,0,0,0.35)]
+
+              group-hover:bg-white/10
+              group-hover:scale-105
+
+              transition-all
+            "
+          >
+
+            <img
+              src="/icons/github.png"
+              alt="GitHub"
+
+              className="
+                w-7
+                h-7
+                object-contain
+              "
+            />
+
           </div>
 
-          <div className="flex flex-col">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-500">
-              Projects
-            </span>
+        </a>
 
-            <span className="text-sm text-zinc-200">
-              12 Active
-            </span>
-          </div>
+        {/* YouTube */}
+        <a
+          href="https://www.youtube.com/@meherpatel9013"
+          target="_blank"
 
-        </div>
-
-        {/* Right */}
-        <div
           className="
+            group
+
             flex
+            flex-col
             items-center
-            gap-4
+
+            transition-all
+            duration-300
+
+            hover:-translate-y-1
           "
         >
 
-          {/* GitHub */}
-          <a
-            href="https://github.com/builtbymauu"
-            target="_blank"
-
+          <div
             className="
-              group
+              w-14
+              h-14
+
+              rounded-2xl
+
+              bg-white/5
+              backdrop-blur-xl
+
+              border
+              border-white/10
 
               flex
-              flex-col
               items-center
-              gap-1
+              justify-center
+
+              shadow-[0_8px_30px_rgba(0,0,0,0.35)]
+
+              group-hover:bg-white/10
+              group-hover:scale-105
 
               transition-all
-              duration-300
-
-              hover:-translate-y-1
             "
           >
 
-            <div
+            <img
+              src="/icons/youtube.png"
+              alt="YouTube"
+
               className="
-                w-14
-                h-14
-
-                rounded-2xl
-
-                bg-white/5
-                backdrop-blur-xl
-
-                border
-                border-white/10
-
-                flex
-                items-center
-                justify-center
-
-                shadow-[0_8px_30px_rgba(0,0,0,0.35)]
-
-                group-hover:bg-white/10
-                group-hover:scale-105
-
-                transition-all
+                w-7
+                h-7
+                object-contain
               "
-            >
+            />
 
-              <img
-                src="/icons/github.png"
-                alt="GitHub"
+          </div>
 
-                className="
-                  w-7
-                  h-7
-                  object-contain
-                "
-              />
+        </a>
 
-            </div>
+        {/* Email */}
+        <a
+          href="mailto:builtbymauu@gmail.com"
 
-          </a>
+          className="
+            group
 
-          {/* YouTube */}
-          <a
-            href="https://www.youtube.com/@meherpatel9013"
-            target="_blank"
+            flex
+            flex-col
+            items-center
 
+            transition-all
+            duration-300
+
+            hover:-translate-y-1
+          "
+        >
+
+          <div
             className="
-              group
+              w-14
+              h-14
+
+              rounded-2xl
+
+              bg-white/5
+              backdrop-blur-xl
+
+              border
+              border-white/10
 
               flex
-              flex-col
               items-center
-              gap-1
+              justify-center
+
+              shadow-[0_8px_30px_rgba(0,0,0,0.35)]
+
+              group-hover:bg-white/10
+              group-hover:scale-105
 
               transition-all
-              duration-300
-
-              hover:-translate-y-1
             "
           >
 
-            <div
+            <img
+              src="/icons/email.png"
+              alt="Email"
+
               className="
-                w-14
-                h-14
-
-                rounded-2xl
-
-                bg-white/5
-                backdrop-blur-xl
-
-                border
-                border-white/10
-
-                flex
-                items-center
-                justify-center
-
-                shadow-[0_8px_30px_rgba(0,0,0,0.35)]
-
-                group-hover:bg-white/10
-                group-hover:scale-105
-
-                transition-all
+                w-7
+                h-7
+                object-contain
               "
-            >
+            />
 
-              <img
-                src="/icons/youtube.png"
-                alt="YouTube"
+          </div>
 
-                className="
-                  w-7
-                  h-7
-                  object-contain
-                "
-              />
+        </a>
 
-            </div>
+        {/* Divider */}
+        <div
+          className="
+            w-px
+            h-10
 
-          </a>
+            bg-white/10
+          "
+        />
 
-          {/* Email */}
-          <a
-            href="mailto:builtbymauu@gmail.com"
+        {/* About */}
+        <button
+          onClick={() => {
+            setAboutOpen(true);
+            setAboutFileIndex(0);
+          }}
 
+          className="
+            group
+
+            flex
+            flex-col
+            items-center
+
+            transition-all
+            duration-300
+
+            hover:-translate-y-1
+          "
+        >
+
+          <div
             className="
-              group
+              w-14
+              h-14
+
+              rounded-2xl
+
+              bg-white/5
+              backdrop-blur-xl
+
+              border
+              border-white/10
+
+              overflow-hidden
 
               flex
-              flex-col
               items-center
-              gap-1
+              justify-center
+
+              shadow-[0_8px_30px_rgba(0,0,0,0.35)]
+
+              group-hover:bg-white/10
+              group-hover:scale-105
 
               transition-all
-              duration-300
-
-              hover:-translate-y-1
             "
           >
 
-            <div
+            <img
+              src="/icons/me.jpeg"
+              alt="About"
+
               className="
-                w-14
-                h-14
+                w-full
+                h-full
 
-                rounded-2xl
-
-                bg-white/5
-                backdrop-blur-xl
-
-                border
-                border-white/10
-
-                flex
-                items-center
-                justify-center
-
-                shadow-[0_8px_30px_rgba(0,0,0,0.35)]
-
-                group-hover:bg-white/10
-                group-hover:scale-105
-
-                transition-all
+                object-cover
               "
-            >
+            />
 
-              <img
-                src="/icons/email.png"
-                alt="Email"
+          </div>
 
-                className="
-                  w-7
-                  h-7
-                  object-contain
-                "
-              />
+        </button>
 
-            </div>
-
-          </a>
-
-          {/* About */}
-          <button
-            onClick={() => {
-              setAboutOpen(true);
-              setAboutFileIndex(0);
-            }}
-
-            className="
-              group
-
-              flex
-              flex-col
-              items-center
-              gap-1
-
-              transition-all
-              duration-300
-
-              hover:-translate-y-1
-            "
-          >
-
-            <div
-              className="
-                w-14
-                h-14
-
-                rounded-2xl
-
-                bg-white/5
-                backdrop-blur-xl
-
-                border
-                border-white/10
-
-                flex
-                items-center
-                justify-center
-
-                shadow-[0_8px_30px_rgba(0,0,0,0.35)]
-
-                text-xl
-
-                group-hover:bg-white/10
-                group-hover:scale-105
-
-                transition-all
-              "
-            >
-              <img
-                src="/icons/me.jpeg"
-                alt="Email"
-
-                className="
-                  w-7
-                  h-7
-                  object-contain
-                "/>
-            </div>
-
-          </button>
-
-        </div>
       </div>
 
     </main>
