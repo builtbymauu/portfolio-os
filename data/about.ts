@@ -1,3 +1,5 @@
+import { url } from "inspector";
+
 export const aboutPanel = {
   title: "Profile Archive",
 
@@ -6,27 +8,8 @@ export const aboutPanel = {
     {
       name: "README.md",
       type: "markdown",
-
-      content: `
-# Meher Patel
-
-Engineering student focused on:
-- theoretical physics
-- intelligent systems
-- computational research
-- human-centered engineering
-
-This workspace contains the projects,
-research systems, and experiments
-I’ve been building over time.
-
-My interests currently revolve around:
-- dynamic systems
-- oscillatory mechanics
-- smart interfaces
-- research environments
-- computational modeling
-      `,
+      
+      url: "/pdfs/detailed_about_section_portfolio_markdown.md"
     },
 
     {
@@ -64,7 +47,8 @@ at the intersection of:
 
 My long-term focus is contributing
 to ambitious technological systems
-and advanced theoretical research.
+and advanced theoretical research. 
+Some of my rather far fetched dreams include winning the Nobel Prize in Physics, going to space and working on the first ever space elevator to the moon (My longest standing aspiration)
       `,
     },
 

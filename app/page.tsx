@@ -303,55 +303,193 @@ export default function Home() {
           className="
             flex
             items-center
-            gap-3
+            gap-4
           "
         >
 
+          {/* GitHub */}
           <a
             href="https://github.com/builtbymauu"
             target="_blank"
+
             className="
-              px-4
-              py-2
+              group
 
-              rounded-xl
-
-              bg-white/5
-
-              text-sm
-              text-zinc-300
-
-              hover:bg-white/10
-              hover:text-white
+              flex
+              flex-col
+              items-center
+              gap-1
 
               transition-all
+              duration-300
+
+              hover:-translate-y-1
             "
           >
-            GitHub
+
+            <div
+              className="
+                w-14
+                h-14
+
+                rounded-2xl
+
+                bg-white/5
+                backdrop-blur-xl
+
+                border
+                border-white/10
+
+                flex
+                items-center
+                justify-center
+
+                shadow-[0_8px_30px_rgba(0,0,0,0.35)]
+
+                group-hover:bg-white/10
+                group-hover:scale-105
+
+                transition-all
+              "
+            >
+
+              <img
+                src="/icons/github.png"
+                alt="GitHub"
+
+                className="
+                  w-7
+                  h-7
+                  object-contain
+                "
+              />
+
+            </div>
+
           </a>
 
+          {/* YouTube */}
+          <a
+            href="https://www.youtube.com/@meherpatel9013"
+            target="_blank"
+
+            className="
+              group
+
+              flex
+              flex-col
+              items-center
+              gap-1
+
+              transition-all
+              duration-300
+
+              hover:-translate-y-1
+            "
+          >
+
+            <div
+              className="
+                w-14
+                h-14
+
+                rounded-2xl
+
+                bg-white/5
+                backdrop-blur-xl
+
+                border
+                border-white/10
+
+                flex
+                items-center
+                justify-center
+
+                shadow-[0_8px_30px_rgba(0,0,0,0.35)]
+
+                group-hover:bg-white/10
+                group-hover:scale-105
+
+                transition-all
+              "
+            >
+
+              <img
+                src="/icons/youtube.png"
+                alt="YouTube"
+
+                className="
+                  w-7
+                  h-7
+                  object-contain
+                "
+              />
+
+            </div>
+
+          </a>
+
+          {/* Email */}
           <a
             href="mailto:builtbymauu@gmail.com"
+
             className="
-              px-4
-              py-2
+              group
 
-              rounded-xl
-
-              bg-white/5
-
-              text-sm
-              text-zinc-300
-
-              hover:bg-white/10
-              hover:text-white
+              flex
+              flex-col
+              items-center
+              gap-1
 
               transition-all
+              duration-300
+
+              hover:-translate-y-1
             "
           >
-            Email
+
+            <div
+              className="
+                w-14
+                h-14
+
+                rounded-2xl
+
+                bg-white/5
+                backdrop-blur-xl
+
+                border
+                border-white/10
+
+                flex
+                items-center
+                justify-center
+
+                shadow-[0_8px_30px_rgba(0,0,0,0.35)]
+
+                group-hover:bg-white/10
+                group-hover:scale-105
+
+                transition-all
+              "
+            >
+
+              <img
+                src="/icons/email.png"
+                alt="Email"
+
+                className="
+                  w-7
+                  h-7
+                  object-contain
+                "
+              />
+
+            </div>
+
           </a>
 
+          {/* About */}
           <button
             onClick={() => {
               setAboutOpen(true);
@@ -359,23 +497,58 @@ export default function Home() {
             }}
 
             className="
-              px-4
-              py-2
+              group
 
-              rounded-xl
-
-              bg-white/5
-
-              text-sm
-              text-zinc-300
-
-              hover:bg-white/10
-              hover:text-white
+              flex
+              flex-col
+              items-center
+              gap-1
 
               transition-all
+              duration-300
+
+              hover:-translate-y-1
             "
           >
-            About
+
+            <div
+              className="
+                w-14
+                h-14
+
+                rounded-2xl
+
+                bg-white/5
+                backdrop-blur-xl
+
+                border
+                border-white/10
+
+                flex
+                items-center
+                justify-center
+
+                shadow-[0_8px_30px_rgba(0,0,0,0.35)]
+
+                text-xl
+
+                group-hover:bg-white/10
+                group-hover:scale-105
+
+                transition-all
+              "
+            >
+              <img
+                src="/icons/me.jpeg"
+                alt="Email"
+
+                className="
+                  w-7
+                  h-7
+                  object-contain
+                "/>
+            </div>
+
           </button>
 
         </div>
