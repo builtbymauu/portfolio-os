@@ -59,13 +59,13 @@ To bridge these theoretical mathematical proofs with computational reality, I de
         name: "research paper.pdf",
         type: "pdf",
         
-        url: "/pdfs/Meher Patel Math AAHL Final IA.pdf",
+        url: "/pdfs/Meher Patel Math AAHL Final.pdf",
       }
     ],
   },
 
   neural: {
-    title: "Magnetohydrodynamics",
+    title: "Multimodal neural sensing",
 
     files: [
 
@@ -126,7 +126,7 @@ This study provides a simplified framework for understanding more complex mechan
         name: "research paper.pdf",
         type: "pdf",
         
-        url: "/pdfs/Meher Patel Physics IA final .pdf",
+        url: "/pdfs/Meher Patel Physics IA final.pdf",
       }
     ],
   },
@@ -185,5 +185,31 @@ A major component of this work involved a preliminary hardware investigation int
       },
     ],
   },
+  MHD: {
+    title: "magnetohydrodynamics",
+
+    files: [
+
+      {
+        name: "README.md",
+        type: "markdown",
+
+        content: `
+### **Thermal Influence on MHD Turbulence**
+
+This research investigates the complex fluid dynamics of ionized water through the lens of magnetohydrodynamics (MHD) to determine how temperature variations influence the suppression of turbulence. By analyzing the interaction between magnetic fields and conducting fluids, I explored the efficacy of the Lorentz force in transitioning turbulent flow toward a more stable, laminar state. The study quantifies these effects through a comparative analysis of the Reynolds Number, representing inertial forces, and the Hartmann Number, which characterizes the magnetic damping force.
+
+The experimental framework utilized temperature as a primary variable to observe shifts in fluid viscosity and electrical conductivity, ultimately mapping how these changes impact the fluid's structural stability under magnetic influence. The findings provide a theoretical foundation for optimizing fluid control in high-stakes environments where turbulence management is critical, such as plasma confinement in fusion reactors and liquid metal cooling systems in advanced nuclear technologies. This work underscores the potential for magnetic fields to act as a precision tool for managing non-linear fluid behaviors in engineered systems.
+        `,
+      },
+      {
+        name: "research paper.pdf",
+        type: "pdf",
+        
+        url: "/pdfs/_Patel_Meher_EE- PHYSICS final.pdf",
+      }
+    ],
+  },
+
 
 };

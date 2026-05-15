@@ -171,6 +171,15 @@ export default function Home() {
           }}
         />
 
+        <DesktopIcon
+          icon="📁"
+          label="Magnetohydrodynamics"
+          onClick={() => {
+            setActiveProject("MHD");
+            setSelectedFileIndex(0);
+          }}
+        />
+
       </div>
 
       {/* Project Window */}
