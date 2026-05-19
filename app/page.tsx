@@ -164,7 +164,7 @@ export default function Home() {
 
         <DesktopIcon
           icon="📁"
-          label="My first IEEE paper"
+          label="Intershsip- Steve Mann"
           onClick={() => {
             setActiveProject("musecroc");
             setSelectedFileIndex(0);
