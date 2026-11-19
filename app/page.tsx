@@ -144,7 +144,7 @@ export default function Home() {
     </section>
 
     <footer className="footer"><div className="footer-mark">BUILT <span>/</span> THOUGHT</div><p>A work in progress, by design.</p>
-      <div className="footer-links"><a href="mailto:builtbymauu@gmail.com">Email ↗</a><a href="https://github.com/builtbymauu" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://www.youtube.com/@meherpatel9013" target="_blank" rel="noreferrer">YouTube ↗</a></div><span className="footer-date">2018 — 2026</span>
+      <div className="footer-links"><a href="https://github.com/builtbymauu" target="_blank" rel="noreferrer">GitHub ↗</a></div><span className="footer-date">2018 — 2026</span>
     </footer>
   </main>;
 }
