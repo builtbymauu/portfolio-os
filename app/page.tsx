@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type Track = "all" | "practical" | "theoretical";
 type Entry = {
@@ -74,9 +74,22 @@ export default function Home() {
   const visible = useMemo(() => entries.filter(e => track === "all" || e.track === track), [track]);
   const active = entries.find(e => e.id === selected);
 
+  useEffect(() => {
+    if (!selected) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setSelected(null);
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [selected]);
+
   function openEntry(id: string) {
     setSelected(id);
-    document.getElementById("timeline")?.scrollIntoView({ behavior:"smooth", block:"start" });
   }
 
   return <main className="ledger-shell">
@@ -113,7 +126,7 @@ export default function Home() {
           <button key={item} className={track === item ? "filter active" : "filter"} onClick={() => setTrack(item)}>{item === "all" ? "Everything" : item}</button>)}</div>
       </div>
       <div className="timeline"><div className="timeline-rail"/>
-        {visible.map((entry,index) => <button key={entry.id} className={"timeline-entry " + entry.track + (selected === entry.id ? " selected" : "")} onClick={() => setSelected(selected === entry.id ? null : entry.id)} aria-expanded={selected === entry.id}>
+        {visible.map((entry,index) => <button key={entry.id} className={"timeline-entry " + entry.track + (selected === entry.id ? " selected" : "")} onClick={() => setSelected(entry.id)} aria-haspopup="dialog">
           <span className="entry-index">{String(index+1).padStart(2,"0")}</span>
           <span className="entry-marker-wrap"><i className={"entry-marker " + entry.status}/></span>
           <span className="entry-date">{entry.date}</span>
@@ -123,15 +136,18 @@ export default function Home() {
       </div>
       <div className="timeline-foot"><span>● COMPLETED &nbsp; ○ IN PROGRESS &nbsp; ◌ EXPLORATION</span><span>DATES MARKED “TO ADD” WILL BE PLACED WHEN THE FULL TIMELINE IS READY</span></div>
 
-      {active && <aside className={"detail-panel " + active.track}>
-        <div className="detail-topline"><span>{active.track === "practical" ? "PRACTICAL INVESTIGATION" : "THEORETICAL INVESTIGATION"}</span><button onClick={() => setSelected(null)} aria-label="Close details">×</button></div>
-        <div className="detail-grid"><div><div className="detail-date">{active.date}</div><h3>{active.title}</h3><p className="detail-note">{active.note}</p></div>
-          <div className="detail-copy">
-            <div><label>THE QUESTION</label><p>{active.question}</p></div><div><label>WHAT I DID</label><p>{active.work}</p></div>
-            <div><label>ARTIFACT / OUTPUT</label><p>{active.artifact}</p></div><div className="tag-list">{active.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
-          </div></div>
-        <div className="detail-status">{active.status === "complete" ? "COMPLETED" : active.status === "ongoing" ? "IN PROGRESS" : "EXPLORATION"}</div>
-      </aside>}
+      {active && <div className="detail-overlay" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setSelected(null); }}>
+        <section className={"detail-modal " + active.track} role="dialog" aria-modal="true" aria-labelledby="detail-title">
+          <div className="detail-topline"><span>{active.track === "practical" ? "FIELD NOTE / PRACTICAL INVESTIGATION" : "FIELD NOTE / THEORETICAL INVESTIGATION"}</span><button onClick={() => setSelected(null)} aria-label="Close details">×</button></div>
+          <div className="detail-grid"><div><div className="detail-date">{active.date}</div><h3 id="detail-title">{active.title}</h3><p className="detail-note">{active.note}</p></div>
+            <div className="detail-copy">
+              <div><label>THE QUESTION</label><p>{active.question}</p></div><div><label>WHAT I DID</label><p>{active.work}</p></div>
+              <div><label>ARTIFACT / OUTPUT</label><p>{active.artifact}</p></div><div className="tag-list">{active.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
+            </div></div>
+          <div className="detail-status">{active.status === "complete" ? "COMPLETED" : active.status === "ongoing" ? "IN PROGRESS" : "EXPLORATION"}</div>
+          <div className="modal-footer"><span>BUILT / THOUGHT — FIELD NOTES</span><button onClick={() => setSelected(null)}>CLOSE NOTE <span>×</span></button></div>
+        </section>
+      </div>}
     </section>
 
     <section className="selected-section" id="selected-work">
