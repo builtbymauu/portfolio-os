@@ -104,7 +104,8 @@ export default function Home() {
 
     <section className="intro" id="top">
       <div className="eyebrow"><i className="live-dot" /> AN OPEN RECORD OF MAKING & THINKING</div>
-      <h1>A record of things<br/><em>built, questioned,</em><br/>and understood.</h1>
+      <h1 className="motto-title"><em>Dubito,</em><br/>ergo cogito,<br/><span>ergo sum.</span></h1>
+      <p className="motto-translation">I doubt, therefore I think, therefore I am.</p>
       <div className="intro-bottom">
         <p className="intro-copy">An evolving collection of projects, experiments, research, and ideas — from the first things I built to the questions I am still trying to answer.</p>
         <div className="intro-meta"><span>TORONTO, CANADA</span><span>MECHANICAL ENGINEERING · U OF T</span><span>EST. NOVEMBER 2018</span></div>
