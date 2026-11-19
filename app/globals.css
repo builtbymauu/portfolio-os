@@ -157,3 +157,7 @@ body{background:var(--bg);color:var(--paper)}
 .detail-modal .detail-copy{grid-template-columns:1fr}
 .modal-footer{align-items:flex-start;flex-direction:column}
 }
+
+.intro h1.motto-title{max-width:900px;margin-bottom:16px}
+.intro h1.motto-title span{color:var(--paper)}
+.motto-translation{margin:0 0 42px;color:var(--muted);font:italic 14px/1.6 Georgia,serif;letter-spacing:.015em}
