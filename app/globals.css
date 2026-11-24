@@ -175,3 +175,78 @@ body{background:var(--bg);color:var(--paper)}
 .detail-modal{width:min(1040px,100%);max-height:90vh}.detail-modal .detail-grid{grid-template-columns:.8fr 1.2fr;gap:48px}
 @media(max-width:800px){.art-section{padding:64px 7vw}.art-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.art-grid img{height:220px}.art-grid .art-feature img{height:280px}.detail-modal .detail-grid{grid-template-columns:1fr;gap:22px}}
 @media(max-width:560px){.project-gallery{grid-template-columns:1fr}.art-grid{grid-template-columns:1fr 1fr;gap:16px 10px}.art-grid img,.art-grid .art-feature img{height:210px}.art-grid .art-feature{grid-column:span 2}.detail-modal{max-height:92vh;padding:20px 17px 16px}.detail-modal .detail-copy{grid-template-columns:1fr}.entry-era{font-size:7px}.timeline-entry{min-height:120px}}
+
+
+/* MIDNIGHT INSTRUMENT palette — replaces the warm paper palette */
+:root {
+  --bg: #101820;
+  --panel: #182630;
+  --paper: #E7ECE9;
+  --muted: #9AA9AA;
+  --blue: #55C5C0;
+  --orange: #E99A68;
+  --line: #344750;
+}
+html, body { background: var(--bg); color: var(--paper); }
+body { font-family: var(--font-geist-sans), Arial, sans-serif; }
+.ledger-shell {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(126, 177, 180, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(126, 177, 180, .045) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+.topbar { background: rgba(16, 24, 32, .94); border-color: var(--line); }
+.wordmark, .footer-mark { color: var(--paper); }
+.topnav { color: #9AA9AA; }
+.topnav a:hover, .topnav button:hover, .footer-links a:hover { color: #E7ECE9; }
+.intro {
+  background:
+    radial-gradient(ellipse at 82% 18%, rgba(85, 197, 192, .10), transparent 36%),
+    linear-gradient(110deg, rgba(233, 154, 104, .055), transparent 48%);
+  border-color: var(--line);
+}
+.intro h1 { color: #F0F3EF; }
+.intro h1 em { color: var(--orange); }
+.intro h1.motto-title span { color: #F0F3EF; }
+.motto-translation { color: #A9B6B3; }
+.intro-copy, .about-strip p, .detail-copy p { color: #C0CBC7; }
+.intro-meta, .section-aside, .entry-note { color: #9AA9AA; }
+.about-strip { background: #1A2A33; border-color: var(--line); }
+.about-strip button { color: #AAB8B5; }
+.timeline-section, .selected-section, .art-section { border-color: var(--line); }
+.timeline-toolbar, .timeline-entry { border-color: var(--line); }
+.timeline-rail { background: #40555D; }
+.timeline-entry:hover, .timeline-entry.selected { background: rgba(85, 197, 192, .075); }
+.entry-index, .entry-arrow, .timeline-foot { color: #809397; }
+.entry-marker { background: var(--bg); }
+.filter { color: #AAB8B5; }
+.filter.active { background: #203640; border-color: #527078; color: #F0F3EF; }
+.selected-section { background: #14212A; }
+.work-card { background: #1A2A33; border-color: #3A5059; }
+.work-card h3, .entry-title { color: #EDF2EF; }
+.work-card p, .work-card-top, .footer p, .footer-date, .footer-links { color: #A1B0AE; }
+.work-card button { color: #E7ECE9; border-color: #52666C; }
+.work-card button:hover { border-color: var(--orange); }
+.footer { border-color: var(--line); }
+.detail-overlay { background: rgba(3, 9, 13, .82); }
+.detail-modal {
+  background: #182630;
+  border-color: #49616A;
+  box-shadow: 0 24px 90px rgba(0, 0, 0, .52);
+}
+.detail-modal .detail-note { color: #AAB9B6; }
+.detail-modal .detail-copy p { color: #D0D9D5; }
+.detail-modal .detail-topline, .detail-modal .detail-status,
+.detail-modal .tag-list span, .modal-footer { color: #A1B0AE; }
+.detail-modal .detail-topline button { color: #E7ECE9; border-color: #49616A; }
+.detail-modal .detail-topline button:hover { background: #263D47; }
+.detail-modal .tag-list span { border-color: #49616A; }
+.modal-footer { border-color: #3B5059; }
+.modal-footer button { color: #E7ECE9; }
+.project-gallery img, .art-grid img { background: #20313A; border-color: #49616A; }
+.project-gallery figcaption, .art-grid figcaption { color: #A1B0AE; }
+.entry-track { color: var(--orange); }
+.theoretical .entry-track, .theoretical .detail-date { color: var(--blue); }
+.practical-dot { background: var(--orange); }
+.theory-dot { background: var(--blue); }
