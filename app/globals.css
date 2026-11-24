@@ -385,3 +385,51 @@ body {
   .detail-overlay, .detail-modal { animation: none; }
   .timeline-entry { transition: none; }
 }
+
+
+/* Oxide & Graphite — finishing details */
+::selection { background: #C16B48; color: #202321; }
+:focus-visible { outline: 2px solid #C16B48; outline-offset: 4px; }
+.topbar { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(14px); }
+.intro { position: relative; }
+.intro::after {
+  content: "B / T";
+  position: absolute;
+  right: 8vw;
+  bottom: 34px;
+  color: rgba(229, 224, 212, .055);
+  font: 700 clamp(70px, 13vw, 190px)/.8 Georgia, serif;
+  letter-spacing: -.09em;
+  pointer-events: none;
+}
+.intro-bottom { position: relative; z-index: 1; }
+.live-dot { background: var(--blue); box-shadow: 0 0 0 4px rgba(145, 161, 138, .12); }
+.timeline-rail { background: #596057; }
+.timeline-entry { border-bottom-color: rgba(145, 161, 138, .18); }
+.timeline-entry:hover .entry-title { color: #F0EBDD; }
+.entry-marker.idea { border-color: currentColor; }
+.detail-modal { border-radius: 2px; }
+.detail-modal .detail-grid h3 { color: var(--paper); }
+.detail-modal .detail-copy label { color: var(--blue); }
+.project-gallery figure, .art-grid figure { margin: 0; }
+.project-gallery img, .art-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.art-grid figure { border: 1px solid #50564F; background: #303632; padding: 8px; }
+.art-grid figcaption { padding: 10px 4px 3px; font: 9px monospace; letter-spacing: .06em; }
+.work-card { border-radius: 2px; transition: transform .2s ease, border-color .2s ease, background .2s ease; }
+.work-card:hover { transform: translateY(-3px); border-color: #788174; background: #343B35; }
+.work-card h3 { line-height: 1.08; }
+.footer-mark { letter-spacing: .16em; }
+@media (max-width: 800px) {
+  .intro::after { right: 6vw; bottom: 22px; }
+  .topbar { position: relative; }
+}
+@media (max-width: 480px) {
+  .intro::after { opacity: .55; font-size: 82px; }
+  .detail-modal { padding: 22px 20px 18px; }
+  .detail-modal .detail-grid { grid-template-columns: 1fr; gap: 24px; }
+}
