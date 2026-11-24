@@ -1,70 +1,52 @@
 "use client";
-
 import { useEffect, useMemo, useState } from "react";
 
 type Track = "all" | "practical" | "theoretical";
+type ImageItem = { src: string; alt: string; caption: string };
 type Entry = {
-  id: string; date: string; title: string; track: Exclude<Track, "all">;
-  status: "complete" | "ongoing" | "idea"; note: string; question: string;
-  work: string; artifact: string; tags: string[];
+  id: string; date: string; era: string; title: string;
+  track: Exclude<Track, "all">; status: "complete" | "ongoing" | "idea";
+  note: string; question: string; work: string; artifact: string;
+  tags: string[]; images?: ImageItem[];
 };
 
 const entries: Entry[] = [
-  { id:"solar", date:"NOV 2018", title:"Solar-powered power bank", track:"practical", status:"complete",
-    note:"The first project I remember building independently: an attempt to turn an everyday object into something I could understand, modify, and make useful.",
-    question:"Could I build a portable charger that collected its own energy?",
-    work:"Designed and assembled a solar-powered power bank as an early exploration of electronics, energy conversion, and hands-on making.",
-    artifact:"Project photographs and build notes to be added", tags:["Electronics","Energy","First project"] },
-  { id:"bridge", date:"DATE TO ADD", title:"Dynamic bridge oscillations", track:"theoretical", status:"complete",
-    note:"An attempt to describe a structure as interacting oscillations, rather than as a static object carrying a load.",
-    question:"How can multidirectional, time-varying loads be represented in a suspension bridge model?",
-    work:"Explored Lissajous-style forcing, catenary geometry, and a differential-equation framework for suspended-deck displacement.",
-    artifact:"Mathematical write-up and model", tags:["Dynamics","Differential equations","Structural mechanics"] },
-  { id:"conduction", date:"DATE TO ADD", title:"The mathematics of 1D conduction", track:"theoretical", status:"complete",
-    note:"A comparison of different ways to approach the same physical system, and what each mathematical method makes easier to see.",
-    question:"How do analytical methods compare when heat is generated inside a one-dimensional rod?",
-    work:"Compared separation of variables, Laplace transforms, and variational methods, then visualized solutions with Python.",
-    artifact:"Research paper and Python visualizations", tags:["Heat transfer","PDEs","Python"] },
-  { id:"neural", date:"DATE TO ADD", title:"EEG and fNIRS integration", track:"theoretical", status:"complete",
-    note:"Looking at neural activity through two different physical signals: electrical activity and changes in blood oxygenation.",
-    question:"What is required to interpret and combine electrical and hemodynamic measurements?",
-    work:"Examined the Modified Beer–Lambert Law, chromophore separation, and assumptions behind multimodal neural sensing.",
-    artifact:"Research paper", tags:["Neuroscience","Optics","Signal processing"] },
-  { id:"aerodel-ban", date:"DATE TO ADD", title:"Breath-actuated nebuliser", track:"practical", status:"complete",
-    note:"A respiratory device project where geometry, material choice, pressure response, and manufacturability had to agree.",
-    question:"How can aerosol delivery respond to inhalation while keeping the mechanism simple to manufacture?",
-    work:"Developed SolidWorks parts and assemblies, selected materials, iterated an adapted umbrella-valve concept in ANSYS, and compared simulation with prototype behaviour.",
-    artifact:"CAD, engineering drawings, ANSYS studies, and prototype data", tags:["Aerodel","SolidWorks","ANSYS","Biomedical engineering"] },
-  { id:"aerodel-dpi", date:"DATE TO ADD", title:"Active dry-powder inhaler", track:"practical", status:"complete",
-    note:"A design comparison focused on how device geometry influences the flow behaviour needed for powder dispersion.",
-    question:"Which design direction offers useful flow behaviour for an active DPI?",
-    work:"Used ANSYS comparisons to evaluate alternate concepts, contributing to the selection of an acoustic direction.",
-    artifact:"Simulation comparisons and design notes", tags:["Aerodel","ANSYS","Respiratory devices"] },
-  { id:"earables", date:"2026", title:"Sensing earables", track:"practical", status:"ongoing",
-    note:"Working toward a purpose-built ear-worn sensing platform, beyond a research setup assembled from modified consumer earbuds.",
-    question:"What is the smallest practical sensor platform for capturing useful signals at the ear?",
-    work:"Working with Professor Alex Mariakakis at the University of Toronto on a new earbud platform for sensing research.",
-    artifact:"Sensor architecture, hardware prototype, and design iterations to come", tags:["U of T","Wearables","Embedded systems","Sensing"] },
-  { id:"brakes", date:"DATE TO ADD", title:"Modular braking demonstrator", track:"practical", status:"ongoing",
-    note:"A teaching mechanism designed to make the relationship between actuation, braking, and suspension easier to inspect.",
-    question:"Can a low-cost modular model make vehicle braking mechanics tangible for undergraduate labs?",
-    work:"Developing a configurable demonstrator with a disc, caliper, pads, and hydraulic actuation.",
-    artifact:"SolidWorks parts and assembly", tags:["MIE243","Mechanical design","Hydraulics"] },
-  { id:"quantum", date:"2026", title:"Quantum mechanics and representation", track:"theoretical", status:"ongoing",
-    note:"Trying to move beyond applying formal rules and develop a physical intuition for what the mathematics represents.",
-    question:"How should a state, an operator, and a change of basis be interpreted as different descriptions of the same system?",
-    work:"Working through Hilbert spaces, Dirac notation, Hermitian and unitary operators, projections, and basis transformations.",
-    artifact:"Notes, derivations, and worked examples", tags:["Quantum mechanics","Linear algebra","U of T"] },
-  { id:"wearables", date:"DATE TO ADD", title:"Wearable interfaces and embedded audio", track:"practical", status:"ongoing",
-    note:"Exploring compact, unobtrusive interfaces that make computing feel less like operating another screen.",
-    question:"How might a small wearable communicate information and accept input without demanding visual attention?",
-    work:"Prototyped with ESP32-C3 hardware, I2S audio, a surface transducer, and capacitive input concepts.",
-    artifact:"Electronics prototypes, wiring, and firmware", tags:["ESP32","Embedded systems","Human-computer interaction"] },
-  { id:"number-theory", date:"ONGOING", title:"Questions in number theory", track:"theoretical", status:"idea",
-    note:"A continuing thread of curiosity about the structure inside the integers and the limits of current mathematical understanding.",
-    question:"What makes problems such as the Riemann hypothesis so difficult?",
-    work:"Independent reading and exploratory notes; this is a learning thread, not a claimed research result.",
-    artifact:"Reading notes to be added", tags:["Number theory","Riemann hypothesis","Mathematics"] }
+  { id:"solar", date:"NOV 2018", era:"EARLY EXPERIMENTS", title:"Solar-powered power bank", track:"practical", status:"complete", note:"An early independent build: turning an everyday object into something I could understand, modify, and make useful.", question:"Could I build a portable charger that collected its own energy?", work:"Designed and assembled a solar-powered power bank as an early exploration of electronics and energy conversion.", artifact:"Early project; no photograph in the supplied image document.", tags:["Electronics","Energy","First project"] },
+  { id:"early-hardware", date:"PRE-COVID · c. 2018–19", era:"EARLY EXPERIMENTS", title:"Taking things apart to understand them", track:"practical", status:"complete", note:"A series of small experiments driven by curiosity about how consumer electronics worked beneath their casing.", question:"What makes a device behave the way it does, and could I repurpose its components?", work:"Built a NAS server from an old laptop with global root access; dissected a Fitbit display; investigated the motion-activated lighting in a fidget spinner; and made an Iron Man-inspired illuminated repulsor.", artifact:"NAS server, Fitbit display teardown, spinning-light investigation, and repulsor. The Fitbit teardown is pictured.", tags:["Linux","Hardware teardown","Electronics","Making"], images:[{src:"fitbit-display-teardown.webp",alt:"Disassembled Fitbit display components",caption:"A small dissection of a Fitbit display."}] },
+  { id:"wearables-early", date:"PRE / DURING COVID · c. 2019–20", era:"EARLY WEARABLES", title:"Bluetooth mask and audio glasses", track:"practical", status:"complete", note:"The first wearable devices: adapting ordinary accessories into connected personal audio.", question:"Could everyday objects be adapted into hands-free connected devices?", work:"Built a Bluetooth mask with an earpiece connected to a phone for music and calls. Also converted glasses into Bluetooth earphones by taking apart a pair of earbuds and routing their charging pads into a compact DC charger.", artifact:"Two early wearable audio prototypes; no dedicated photographs in the supplied document.", tags:["Wearables","Bluetooth","Audio electronics"] },
+  { id:"exo-arm", date:"DURING COVID · c. 2020", era:"MECHANICAL AUGMENTATION", title:"Pneumatic exo-arm", track:"practical", status:"complete", note:"A self-built exploration of powered assistance, using a salvaged medical compressor as the pneumatic source.", question:"Could pneumatic artificial muscles produce useful assisted movement in a wearable arm?", work:"Designed and built the exo-arm and its pneumatic muscles, then used the compressor from an old nebuliser to actuate the system.", artifact:"Custom pneumatic muscles, arm structure, and compressor-based actuation; no dedicated photograph supplied.", tags:["Pneumatics","Assistive technology","Mechanical design"] },
+  { id:"edith", date:"c. 2020", era:"WEARABLE COMPUTING", title:"EDITH smart glasses", track:"practical", status:"complete", note:"An early wearable-computing experiment, developed in 2020 before today's generative-AI wave.", question:"Could a small single-board computer and a neural network make glasses context-aware?", work:"Built a smart-glasses prototype around a Raspberry Pi Zero and a neural network.", artifact:"Raspberry Pi Zero smart-glasses prototype; no dedicated photograph supplied.", tags:["Raspberry Pi","Wearables","Machine learning"] },
+  { id:"prosthetics", date:"DATE TO CONFIRM", era:"REHABILITATION ENGINEERING", title:"Prosthetic arm design and rehabilitation", track:"practical", status:"complete", note:"A project shaped by learning directly from rehabilitation practice and seeing how a device performs in everyday life.", question:"How can an affordable, manufacturable prosthetic design support practical rehabilitation and daily activities?", work:"Undertook research with the Centre of Rehabilitation in Bangladesh to understand 3D-printed prostheses; developed a design you report was patented in India; and worked with Prince Aly Khan Hospital on its use in rehabilitation.", artifact:"Photographs show the first user demonstrating the prosthesis in several everyday scenarios, including riding a motorcycle and writing.", tags:["Prosthetics","Rehabilitation","3D printing","Human-centred design"], images:[
+    {src:"prosthetic-arm-bike.webp",alt:"Prosthetic arm positioned on a motorcycle handlebar",caption:"The prosthesis in a motorcycle-riding scenario."},
+    {src:"prosthetic-arm-use.webp",alt:"First user demonstrating the prosthetic arm",caption:"The first user demonstrating the prosthesis."},
+    {src:"prosthetics-rehabilitation.webp",alt:"Prosthetic arm rehabilitation visit",caption:"Rehabilitation visit and device demonstration."},
+    {src:"prosthetic-component.webp",alt:"Close-up of a prosthetic component",caption:"A close-up of a component from the project."}
+  ] },
+  { id:"spectroscopy", date:"DATE TO CONFIRM", era:"OPTICS & NEUROSCIENCE", title:"Spectroscopy and the Modified Beer–Lambert Law", track:"theoretical", status:"complete", note:"A reaction-rate experiment that became a stepping stone toward more accurate interpretation of fNIRS measurements.", question:"How accurately can optical absorbance and concentration changes be related in a controlled reaction — and what changes when light travels through brain tissue?", work:"Ran a rate-of-reaction experiment using cuvettes and spectrophotometric analysis, comparing measurements with the Modified Beer–Lambert Law. This informed later work on adapting the model for oxy- and deoxyhaemoglobin concentration changes in fNIRS.", artifact:"The blue cuvette photographs document the experiment; the later fNIRS model work is documented separately.", tags:["Spectroscopy","Optics","Beer–Lambert law","fNIRS"], images:[
+    {src:"beer-lambert-cuvettes-01.webp",alt:"Cuvettes containing blue reaction solutions",caption:"Reaction-rate samples prepared for optical analysis."},
+    {src:"beer-lambert-cuvettes-02.webp",alt:"Cuvettes arranged for spectroscopy",caption:"A second view of the cuvette samples."},
+    {src:"beer-lambert-cuvettes-03.webp",alt:"Blue solutions in spectroscopy cuvettes",caption:"Samples used in the absorbance comparison."}
+  ] },
+  { id:"mann", date:"DATE TO CONFIRM · ONE YEAR", era:"MANN LABS · NEUROTECHNOLOGY", title:"EEG, fNIRS and a brain-controlled wheelchair", track:"theoretical", status:"complete", note:"A year of work with Steve Mann at Mann Labs, exploring how brain signals can be acquired and interpreted for assistive interaction.", question:"How can electrical and optical measurements of brain activity be interpreted robustly enough to support assistive control?", work:"Worked on EEG and fNIRS, built a brain-controlled wheelchair, and published research on fNIRS data interpretation proposing a modified Beer–Lambert formulation that takes the complex optical properties of the brain into consideration.", artifact:"Published fNIRS research and a brain-controlled wheelchair project. Publication details can be added when supplied.", tags:["Mann Labs","Steve Mann","EEG","fNIRS","Assistive technology","Research"] },
+  { id:"dpi", date:"AERODEL · DATE TO CONFIRM", era:"RESPIRATORY ENGINEERING", title:"Electrodynamic propulsion for dry-powder inhalers", track:"practical", status:"complete", note:"Early physical prototypes exploring an alternative way to move powder in an inhaler.", question:"Could an electrodynamic mechanism contribute to powder transport in a dry-powder inhaler?", work:"Created preliminary copper-tape electrode traces while interning at Aerodel, exploring electrodynamic propulsion concepts for a dry-powder inhaler.", artifact:"Copper-tape electrode prototypes photographed in the supplied document.", tags:["Aerodel","DPI","Electrodynamics","Prototyping"], images:[{src:"dpi-copper-electrode-traces.webp",alt:"Copper electrode traces on a perforated prototyping board",caption:"Preliminary copper-tape electrode traces for electrodynamic DPI exploration."}] },
+  { id:"ban", date:"AERODEL · DATE TO CONFIRM", era:"RESPIRATORY ENGINEERING", title:"Breath-actuated nebuliser (BAN)", track:"practical", status:"complete", note:"A respiratory-device development project combining mechanical design, pressure response, simulation, and prototyping.", question:"How can aerosol delivery respond to a patient's inhalation while keeping the mechanism manufacturable?", work:"Developed the breath-actuated nebuliser concept and detailed CAD, including an adapted bistable valve mechanism. Iterated the valve in ANSYS and compared its simulated behaviour with prototype measurements. You described the device as under patent review.", artifact:"Initial concept sketch and ANSYS simulation of the custom bistable valve.", tags:["Aerodel","Biomedical engineering","SolidWorks","ANSYS","Patent review"], images:[
+    {src:"ban-concept-sketch.webp",alt:"Hand-drawn breath-actuated nebuliser concept sketch",caption:"Initial BAN concept sketch showing inhalation and exhalation flow paths."},
+    {src:"ban-ansys-valve.webp",alt:"ANSYS deformation simulation of a bistable valve",caption:"ANSYS simulation examining actuation of the custom bistable valve."}
+  ] },
+  { id:"autopep", date:"AERODEL · CURRENT DEVELOPMENT", era:"RESPIRATORY ENGINEERING", title:"AutoPep — feedback-informed airway clearance", track:"practical", status:"ongoing", note:"A move from a therapy device toward a system that can sense how therapy is working and adapt its behaviour.", question:"Can chest-wall response during therapy provide a measurable signal of mucus clearance?", work:"Prototyped a test rig using a surface transducer to retrieve feedback from the chest wall during therapy. The longer-term goal is to determine whether mucus clearance can be detected and use that feedback to develop a smart, self-learning closed-loop system.", artifact:"The breadboard photograph shows the surface-transducer feedback test rig.", tags:["AutoPep","Aerodel","Surface transducer","Feedback sensing","Closed-loop systems"], images:[{src:"autopep-chest-wall-feedback-rig.webp",alt:"Breadboard test rig connected to a surface transducer",caption:"Early AutoPep test rig using a surface transducer to investigate chest-wall feedback."}] },
+  { id:"mdi", date:"AERODEL · DATE TO CONFIRM", era:"RESPIRATORY ENGINEERING", title:"Breath-actuated electronic MDI", track:"practical", status:"ongoing", note:"A further respiratory-device development thread alongside the nebuliser and dry-powder inhaler work.", question:"How might electronic actuation be integrated with a breath-actuated metered-dose inhaler?", work:"Worked on prototyping a breath-actuated electronic MDI at Aerodel. The company continues to consult with you on development work.", artifact:"Prototype development; no dedicated image in the supplied document.", tags:["Aerodel","Electronic MDI","Respiratory devices"] },
+  { id:"gilboa", date:"DATE TO CONFIRM", era:"BIOLOGICAL VISION & MACHINE LEARNING", title:"Bird recognition: CNNs, ViTs and human vision", track:"theoretical", status:"complete", note:"A collaboration exploring how artificial vision compares with the visual strategies used by human bird experts and novices.", question:"Do neural networks attend to the same visual features that human experts use when recognising bird species?", work:"Built CNN and Vision Transformer models for bird-species classification with Erik Wing at Gilboa Labs. Compared model behaviour with MRI and eye-tracking data from expert and novice bird watchers, including Grad-CAM visualisations.", artifact:"The supplied image shows Grad-CAM outputs from the bird-classification work.", tags:["Gilboa Labs","CNN","Vision Transformer","Grad-CAM","MRI","Eye tracking"], images:[{src:"gilboa-gradcam.webp",alt:"CNN Grad-CAM heatmap outputs for bird images",caption:"Grad-CAM visualisations from the bird-classification work."}] },
+  { id:"earables", date:"2026 · ONGOING", era:"EAR-WORN SENSING", title:"Earables for cardiac and vascular sensing", track:"practical", status:"ongoing", note:"A purpose-built ear-worn sensing platform, moving beyond a research setup assembled from modified consumer earbuds.", question:"Can ear-worn sensors capture useful cardiac signals, and could those signals help investigate pulsatile tinnitus and changes in cerebral hemodynamics?", work:"Working with Professor Alex Mariakakis at the University of Toronto on a new earphone platform to monitor cardiac activity, with longer-term research goals around pulsatile tinnitus and brain hemodynamics.", artifact:"Sensor architecture and prototype development in progress; no earable photograph supplied yet.", tags:["U of T","Alex Mariakakis","Earables","Cardiac sensing","Wearables"] }
+];
+
+const artworks: ImageItem[] = [
+  {src:"art-workshop-01.webp",alt:"Artist working on a sculpture outdoors",caption:"Sculpture-making process — workshop study."},
+  {src:"art-workshop-02.webp",alt:"Artist shaping a sculptural form at a workbench",caption:"Working directly with form and material."},
+  {src:"sculpture-01.webp",alt:"Large white sculptural figure in progress",caption:"Sculptural installation in progress."},
+  {src:"sculpture-02.webp",alt:"Large sculpture viewed from behind in a courtyard",caption:"A second view of the sculptural work."},
+  {src:"art-painting-portrait.webp",alt:"Figurative painting with a warm sunset palette",caption:"Figurative painting and colour study."},
+  {src:"art-paintings-01.webp",alt:"Two paintings displayed side by side",caption:"A selection of paintings."},
+  {src:"art-paintings-02.webp",alt:"Artist standing beside a framed painting",caption:"Painting exhibition / finished work."}
 ];
 
 export default function Home() {
@@ -78,90 +60,43 @@ export default function Home() {
     if (!selected) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") setSelected(null);
-    }
+    function onKeyDown(event: KeyboardEvent) { if (event.key === "Escape") setSelected(null); }
     window.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", onKeyDown);
-    };
+    return () => { document.body.style.overflow = previousOverflow; window.removeEventListener("keydown", onKeyDown); };
   }, [selected]);
-
-  function openEntry(id: string) {
-    setSelected(id);
-  }
 
   return <main className="ledger-shell">
     <header className="topbar">
       <a className="wordmark" href="#top">BUILT <span>/</span> THOUGHT</a>
-      <nav className="topnav">
-        <a href="#timeline">Timeline</a><a href="#selected-work">Selected work</a>
-        <button onClick={() => setAboutOpen(v => !v)}>About</button>
-        <a href="https://github.com/builtbymauu" target="_blank" rel="noreferrer">GitHub ↗</a>
-      </nav>
+      <nav className="topnav"><a href="#timeline">Timeline</a><a href="#selected-work">Selected work</a><a href="#artwork">Art & sculpture</a><button onClick={() => setAboutOpen(v => !v)}>About</button><a href="https://github.com/builtbymauu" target="_blank" rel="noreferrer">GitHub ↗</a></nav>
     </header>
-
     <section className="intro" id="top">
       <div className="eyebrow"><i className="live-dot" /> AN OPEN RECORD OF MAKING & THINKING</div>
       <h1 className="motto-title"><em>Dubito,</em><br/>ergo cogito,<br/><span>ergo sum.</span></h1>
       <p className="motto-translation">I doubt, therefore I think, therefore I am.</p>
-      <div className="intro-bottom">
-        <p className="intro-copy">An evolving collection of projects, experiments, research, and ideas — from the first things I built to the questions I am still trying to answer.</p>
-        <div className="intro-meta"><span>TORONTO, CANADA</span><span>MECHANICAL ENGINEERING · U OF T</span><span>EST. NOVEMBER 2018</span></div>
-      </div>
+      <div className="intro-bottom"><p className="intro-copy">An evolving archive of projects, experiments, research, and ideas — from early hardware experiments to biomedical engineering, neuroscience, and machine learning.</p><div className="intro-meta"><span>TORONTO, CANADA</span><span>MECHANICAL ENGINEERING · U OF T</span><span>EST. NOVEMBER 2018</span></div></div>
     </section>
-
-    {aboutOpen && <section className="about-strip">
-      <div className="section-kicker">A SHORT NOTE</div>
-      <p>I am interested in the space where physical systems, computation, and human experience meet. This is not a conventional résumé; it is a working record of what I have explored, what I have made, and how one question has led to another.</p>
-      <button onClick={() => setAboutOpen(false)} aria-label="Close about">×</button>
-    </section>}
-
+    {aboutOpen && <section className="about-strip"><div className="section-kicker">A SHORT NOTE</div><p>I am interested in the space where physical systems, computation, and human experience meet. This is not a conventional résumé; it is a working record of what I have explored, what I have made, and how one question has led to another.</p><button onClick={() => setAboutOpen(false)} aria-label="Close about">×</button></section>}
     <section className="timeline-section" id="timeline">
-      <div className="section-heading"><div><div className="section-kicker">01 / THE RECORD</div><h2>One timeline. Two directions.</h2></div>
-        <p className="section-aside">Theoretical questions and practical work, developing alongside one another.</p></div>
-      <div className="timeline-toolbar">
-        <div className="legend"><span><i className="legend-dot practical-dot"/> PRACTICAL</span><span><i className="legend-dot theory-dot"/> THEORETICAL</span></div>
-        <div className="filters">{(["all","practical","theoretical"] as Track[]).map(item =>
-          <button key={item} className={track === item ? "filter active" : "filter"} onClick={() => setTrack(item)}>{item === "all" ? "Everything" : item}</button>)}</div>
-      </div>
+      <div className="section-heading"><div><div className="section-kicker">01 / THE RECORD</div><h2>A life in experiments.</h2></div><p className="section-aside">Early tinkering, assistive devices, respiratory engineering, neuroscience, and machine learning — connected by curiosity.</p></div>
+      <div className="timeline-toolbar"><div className="legend"><span><i className="legend-dot practical-dot"/> PRACTICAL</span><span><i className="legend-dot theory-dot"/> THEORETICAL</span></div><div className="filters">{(["all","practical","theoretical"] as Track[]).map(item => <button key={item} className={track === item ? "filter active" : "filter"} onClick={() => setTrack(item)}>{item === "all" ? "Everything" : item}</button>)}</div></div>
       <div className="timeline"><div className="timeline-rail"/>
-        {visible.map((entry,index) => <button key={entry.id} className={"timeline-entry " + entry.track + (selected === entry.id ? " selected" : "")} onClick={() => setSelected(entry.id)} aria-haspopup="dialog">
-          <span className="entry-index">{String(index+1).padStart(2,"0")}</span>
-          <span className="entry-marker-wrap"><i className={"entry-marker " + entry.status}/></span>
-          <span className="entry-date">{entry.date}</span>
-          <span className="entry-main"><span className="entry-title">{entry.title}</span><span className="entry-note">{entry.note}</span></span>
-          <span className="entry-track">{entry.track === "practical" ? "BUILD /" : "THINK /"}</span><span className="entry-arrow">↗</span>
-        </button>)}
+        {visible.map((entry,index) => <button key={entry.id} className={"timeline-entry " + entry.track + (selected === entry.id ? " selected" : "")} onClick={() => setSelected(entry.id)} aria-haspopup="dialog"><span className="entry-index">{String(index+1).padStart(2,"0")}</span><span className="entry-marker-wrap"><i className={"entry-marker " + entry.status}/></span><span className="entry-date">{entry.date}</span><span className="entry-main"><span className="entry-era">{entry.era}</span><span className="entry-title">{entry.title}</span><span className="entry-note">{entry.note}</span></span><span className="entry-track">{entry.track === "practical" ? "BUILD /" : "THINK /"}</span><span className="entry-arrow">↗</span></button>)}
       </div>
-      <div className="timeline-foot"><span>● COMPLETED &nbsp; ○ IN PROGRESS &nbsp; ◌ EXPLORATION</span><span>DATES MARKED “TO ADD” WILL BE PLACED WHEN THE FULL TIMELINE IS READY</span></div>
-
-      {active && <div className="detail-overlay" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setSelected(null); }}>
-        <section className={"detail-modal " + active.track} role="dialog" aria-modal="true" aria-labelledby="detail-title">
-          <div className="detail-topline"><span>{active.track === "practical" ? "FIELD NOTE / PRACTICAL INVESTIGATION" : "FIELD NOTE / THEORETICAL INVESTIGATION"}</span><button onClick={() => setSelected(null)} aria-label="Close details">×</button></div>
-          <div className="detail-grid"><div><div className="detail-date">{active.date}</div><h3 id="detail-title">{active.title}</h3><p className="detail-note">{active.note}</p></div>
-            <div className="detail-copy">
-              <div><label>THE QUESTION</label><p>{active.question}</p></div><div><label>WHAT I DID</label><p>{active.work}</p></div>
-              <div><label>ARTIFACT / OUTPUT</label><p>{active.artifact}</p></div><div className="tag-list">{active.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
-            </div></div>
-          <div className="detail-status">{active.status === "complete" ? "COMPLETED" : active.status === "ongoing" ? "IN PROGRESS" : "EXPLORATION"}</div>
-          <div className="modal-footer"><span>BUILT / THOUGHT — FIELD NOTES</span><button onClick={() => setSelected(null)}>CLOSE NOTE <span>×</span></button></div>
-        </section>
-      </div>}
+      <div className="timeline-foot"><span>● COMPLETED &nbsp; ○ IN PROGRESS &nbsp; ◌ EXPLORATION</span><span>DATES ARE APPROXIMATE WHERE EXACT DATES WERE NOT AVAILABLE</span></div>
+      {active && <div className="detail-overlay" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setSelected(null); }}><section className={"detail-modal " + active.track} role="dialog" aria-modal="true" aria-labelledby="detail-title">
+        <div className="detail-topline"><span>{active.era} / {active.track === "practical" ? "FIELD NOTE — BUILD" : "FIELD NOTE — THINK"}</span><button onClick={() => setSelected(null)} aria-label="Close details">×</button></div>
+        <div className="detail-grid"><div><div className="detail-date">{active.date}</div><h3 id="detail-title">{active.title}</h3><p className="detail-note">{active.note}</p></div><div className="detail-copy"><div><label>THE QUESTION</label><p>{active.question}</p></div><div><label>WHAT I DID</label><p>{active.work}</p></div><div><label>ARTIFACT / OUTPUT</label><p>{active.artifact}</p></div><div className="tag-list">{active.tags.map(tag => <span key={tag}>{tag}</span>)}</div></div></div>
+        {active.images && <div className="project-gallery">{active.images.map(image => <figure key={image.src}><img src={"/images/" + image.src} alt={image.alt}/><figcaption>{image.caption}</figcaption></figure>)}</div>}
+        <div className="detail-status">{active.status === "complete" ? "COMPLETED" : active.status === "ongoing" ? "IN PROGRESS" : "EXPLORATION"}</div><div className="modal-footer"><span>BUILT / THOUGHT — FIELD NOTES</span><button onClick={() => setSelected(null)}>CLOSE NOTE <span>×</span></button></div>
+      </section></div>}
     </section>
-
-    <section className="selected-section" id="selected-work">
-      <div className="section-heading"><div><div className="section-kicker">02 / A CLOSER LOOK</div><h2>Selected investigations.</h2></div><p className="section-aside">A few threads connecting physical design, mathematical models, and sensing.</p></div>
-      <div className="work-grid">
-        <article className="work-card work-practical"><div className="work-card-top"><span>01 — ENGINEERING</span><span>BUILD /</span></div><h3>Respiratory<br/>device development</h3><p>Designing mechanisms around airflow, pressure, patient use, simulation, and manufacture.</p><button onClick={() => openEntry("aerodel-ban")}>Open investigation ↗</button></article>
-        <article className="work-card work-theory"><div className="work-card-top"><span>02 — MATHEMATICAL PHYSICS</span><span>THINK /</span></div><h3>Models of<br/>physical systems</h3><p>Using differential equations and computational tools to make complicated physical behaviour more legible.</p><button onClick={() => openEntry("bridge")}>Open investigation ↗</button></article>
-        <article className="work-card work-practical"><div className="work-card-top"><span>03 — HUMAN INTERFACES</span><span>BUILD /</span></div><h3>Earables &<br/>wearable sensing</h3><p>Exploring compact sensing hardware and quieter ways for people to interact with computational systems.</p><button onClick={() => openEntry("earables")}>Open investigation ↗</button></article>
-      </div>
-    </section>
-
-    <footer className="footer"><div className="footer-mark">BUILT <span>/</span> THOUGHT</div><p>A work in progress, by design.</p>
-      <div className="footer-links"><a href="https://github.com/builtbymauu" target="_blank" rel="noreferrer">GitHub ↗</a></div><span className="footer-date">2018 — 2026</span>
-    </footer>
+    <section className="selected-section" id="selected-work"><div className="section-heading"><div><div className="section-kicker">02 / A CLOSER LOOK</div><h2>Selected investigations.</h2></div><p className="section-aside">A few threads connecting physical design, mathematical models, and sensing.</p></div><div className="work-grid">
+      <article className="work-card work-practical"><div className="work-card-top"><span>01 — RESPIRATORY ENGINEERING</span><span>BUILD /</span></div><h3>Respiratory<br/>device development</h3><p>BAN, AutoPep, electrodynamic DPI prototypes, and an electronic breath-actuated MDI.</p><button onClick={() => setSelected("ban")}>Open investigation ↗</button></article>
+      <article className="work-card work-theory"><div className="work-card-top"><span>02 — NEUROSCIENCE</span><span>THINK /</span></div><h3>Brain signals<br/>& optical models</h3><p>EEG, fNIRS, spectroscopy, and modelling the relationship between light and brain tissue.</p><button onClick={() => setSelected("mann")}>Open investigation ↗</button></article>
+      <article className="work-card work-practical"><div className="work-card-top"><span>03 — ASSISTIVE TECHNOLOGY</span><span>BUILD /</span></div><h3>Prosthetics &<br/>wearable sensing</h3><p>From pneumatic augmentation and rehabilitation devices to ear-worn cardiac sensing.</p><button onClick={() => setSelected("prosthetics")}>Open investigation ↗</button></article>
+    </div></section>
+    <section className="art-section" id="artwork"><div className="section-heading"><div><div className="section-kicker">03 / OUTSIDE THE ENGINEERING NOTEBOOK</div><h2>Art & sculpture.</h2></div><p className="section-aside">A quieter collection of making with material, form, colour, and image.</p></div><div className="art-grid">{artworks.map((image,index) => <figure className={index === 2 || index === 5 ? "art-feature" : ""} key={image.src}><img src={"/images/" + image.src} alt={image.alt}/><figcaption>{image.caption}</figcaption></figure>)}</div></section>
+    <footer className="footer"><div className="footer-mark">BUILT <span>/</span> THOUGHT</div><p>A work in progress, by design.</p><div className="footer-links"><a href="https://github.com/builtbymauu" target="_blank" rel="noreferrer">GitHub ↗</a></div><span className="footer-date">2018 — 2026</span></footer>
   </main>;
 }
